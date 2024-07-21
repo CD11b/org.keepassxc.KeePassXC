@@ -69,8 +69,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/keepassxreboot/keepassxc.git
-        tag: 2.7.9
-        commit: 8f6dd13b0add1dd3fb666cc43ae1e5db478b1827
+        branch: develop
+        commit: afe634d4f2a0f32e96ea720289262a4be90afc0f
     post-install:
       - install -Dm755 ./utils/keepassxc-flatpak-wrapper.sh /app/bin/keepassxc-wrapper
       - |
@@ -83,6 +83,15 @@ modules:
     modules:
 
       - shared-modules/libusb/libusb.json
+
+      - name: libkeyutils
+        buildsystem: simple
+        build-commands: 
+          - make NO_ARLIB=1 BINDIR=/app/bin SBINDIR=/app/sbin LIBDIR=/app/lib INCLUDEDIR=/app/include MANDIR=/app/share/man SHAREDIR=/app install
+        sources:
+          - type: git
+            url: 'https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git'
+            commit: 'c076dff259e99d84d3822b4d2ad7f3f66532f411'
 
       - name: minizip
         subdir: contrib/minizip
